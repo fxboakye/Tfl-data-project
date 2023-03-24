@@ -1,0 +1,28 @@
+services:
+  ### Prefect Orion API
+  orion:
+    container_name: orion
+    image: prefecthq/prefect:2.7.7-python3.11
+    volumes:
+      - prefect:/root/.prefect
+    entrypoint: ["prefect", "orion", "start"]
+    environment:
+      - PREFECT_API_URL=${PREFECT_API_URL}
+      - PREFECT_ORION_API_HOST=0.0.0.0
+    ports:
+      - 4200:4200
+    profiles: ["orion"]
+
+  ### Prefect CLI
+  cli:
+    container_name: cli
+    image: prefecthq/prefect:2.7.7-python3.11
+    entrypoint: ./docker-entrypoint.sh
+    working_dir: "/root/flows"
+    volumes:
+      - "./flows:/root/flows"
+      - "./secrets:/root/secrets"
+    profiles: ["cli"]
+      
+volumes:
+  prefect:

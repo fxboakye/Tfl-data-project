@@ -1,0 +1,8 @@
+pandas
+bs4
+requests
+prefect
+prefect_gcp
+google-cloud-storage
+pathlib
+fastparquet
