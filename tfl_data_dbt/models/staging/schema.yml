@@ -1,0 +1,56 @@
+version: 2
+
+sources:
+    - name: staging
+      schema: tfldataset
+      database: challlenge-lab-376801
+      tables:
+        - name: tfl
+    
+models:
+    - name: stg_tfl_rides
+      description: >
+        Rides made by Santander Cycles. 
+        The records were collected from the Transport For London website.
+      columns:
+          - name: rental_id
+            description: Primary key for this table
+            tests:
+                - unique:
+                    severity: warn
+                - not_null:
+                    severity: warn
+          - name: bike_id
+            description: > 
+                A code indicating the id of the bike used for a specific transaction
+          - name: pickup_datetime 
+            description: The date and time when the bike was picked up.
+          - name: dropoff_datetime 
+            description: The date and time when the bike was dropped off.
+          - name: pustation_id
+            description: locationid where the bike was picked up.
+            tests:
+            - relationships:
+                to: ref('stg_tfl_rides')
+                field: station_id
+          - name: dostation_id
+            description: locationid where the bike was dropped off.
+            tests:
+              - relationships:
+                  to: ref('stg_tfl_rides')
+                  field: station_id
+
+    - name: stg_tfl_station
+      description: >
+        Station names for corresponding ids
+      columns:
+          - name: station_id
+            description: Primary key for this table
+            tests:
+                - unique:
+                    severity: warn
+                - not_null:
+                    severity: warn
+          - name: station_name
+            description: > 
+                Name of Station       

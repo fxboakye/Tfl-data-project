@@ -23,6 +23,15 @@ services:
       - "./flows:/root/flows"
       - "./secrets:/root/secrets"
     profiles: ["cli"]
+  
+  dbt:
+    build:
+      context: .
+    volumes:
+      - .:/usr/app/dbt
+      - ~/.dbt/:/root/.dbt/
+      - "./secrets/gcp_credentials.json:/root/secrets/gcp_credentials.json"
+    working_dir: /usr/app/dbt/
       
 volumes:
   prefect:

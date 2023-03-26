@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: tfl_dim_total_rides
+    description: >
+      Table contains aggregated count of all rides by pickup_datetime and station_name.
+    columns:
+      - name: total_rides
+        description: Total counts of all rides by pickup_datetime and station_name.
+        tests:
+            - not_null:
+                severity: error
+  - name: tfl_fact
+    description: >
+      Contains rides started and completed in 2022.
+      
+ 
+    
