@@ -41,7 +41,7 @@ Then on your computer navigate to `http://localhost:4200/` to view the workflow 
 
 ### Executing the ingestion script
 
-To execute the ingestion script, open a terminal, navigate to the prefect-container directory and run:
+To execute the ingestion script, open a terminal and run:
 
 ```
 docker-compose run cli
@@ -73,9 +73,12 @@ You would then need to build the dbt image by running:
 docker build .
 ```
 
-which would build the image from the DockerFile.
+Check if dbt-bigquery connection is ok by running:
+```
+docker compose run --workdir="//usr/app/dbt/tfl_data_dbt" dbt debug
+```
 
-Once the image has been built, you would need to run, which will execute dbt transformation models on the dataset:
+To execute the dbt transformation models on the dataset,  you would need to run:
 
 ```
 docker compose run --workdir="//usr/app/dbt/tfl_data_dbt" dbt run
