@@ -157,8 +157,8 @@ def main_flow(years:list, months: list,bucket_name:str):
 
 
 if __name__=='__main__':
-    months=list(range(4,5))
-    years=[2021]
+    months=list(range(1,13))
+    years=[2022]
     bucket_name='tfl-cycle-trips'
     table_name='tfldocker'
     main_flow(years,months,bucket_name)

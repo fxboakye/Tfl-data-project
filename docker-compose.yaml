@@ -7,8 +7,8 @@ services:
       - prefect:/root/.prefect
     entrypoint: ["prefect", "orion", "start"]
     environment:
-      - PREFECT_API_URL=${PREFECT_API_URL}
-      - PREFECT_ORION_API_HOST=0.0.0.0
+      - PREFECT_API_URL= http://host.docker.internal:4200/api
+      - PREFECT_ORION_API_HOST= 0.0.0.0
     ports:
       - 4200:4200
     profiles: ["orion"]
@@ -21,7 +21,7 @@ services:
     working_dir: "/root/flows"
     volumes:
       - "./flows:/root/flows"
-      - "./secrets:/root/secrets"
+      - "~/.google/credentials/google_credentials.json:/root/secrets"
     profiles: ["cli"]
   
   dbt:
@@ -30,7 +30,7 @@ services:
     volumes:
       - .:/usr/app/dbt
       - ~/.dbt/:/root/.dbt/
-      - "./secrets/gcp_credentials.json:/root/secrets/gcp_credentials.json"
+      - "~/.google/credentials/google_credentials.json:/root/secrets/gcp_credentials.json"
     working_dir: /usr/app/dbt/
     profiles: ["dbt"]
       
