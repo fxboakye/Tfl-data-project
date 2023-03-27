@@ -9,6 +9,7 @@ from datetime import timedelta
 from prefect_gcp.cloud_storage import GcsBucket
 from prefect_gcp import GcpCredentials
 from google.cloud import storage
+from bigquery_ingestion import bigquery_flow
 from prefect.tasks import task_input_hash
 import os
 import shutil
@@ -90,7 +91,6 @@ def get_dataframe(url_list: list) -> pd.DataFrame:
 def write_local(df: pd.DataFrame,file_name):
     """Writes dataframe to local storage"""
     #Creates directory
-    print('hi')
     try:
         os.mkdir('cycling_datasets')
     except:
@@ -109,7 +109,7 @@ def write_gcs(path) -> None:
     client = storage.Client.from_service_account_json('/root/secrets/gcp_credentials.json')
     bucket = client.get_bucket(bucket_name)
     blob = bucket.blob(path)
-    
+    exists=blob.exists()
     if not blob.exists():
         #Createa Prefect Credential Block
         credentials_block = GcpCredentials(
@@ -120,13 +120,13 @@ def write_gcs(path) -> None:
         gcp_credentials=credentials_block,
         bucket=bucket_name
         )
-
         gcp_block.upload_from_path(
             from_path=Path(path), to_path=path)
+        
+        return exists
     else:
         print('Dataset for specified month and year already exists in data lake')
-
-    return blob.exists()
+        return exists
 
 @flow()
 def etl_flow(year:int,month:int):
@@ -134,7 +134,13 @@ def etl_flow(year:int,month:int):
     data=get_dataframe(url)
     file_name=f'{year}-{month:02}'
     path=write_local(data,file_name)
-    write_gcs(path)
+    blob_exists=write_gcs(path)
+
+    #Checks before inserting data into bigquery
+    if not blob_exists:
+        bigquery_flow(year,month,table_name)
+    else:
+        print('No data inserted into table')
 
     #deletes preiously created directory and all files
     shutil.rmtree('cycling_datasets')
@@ -151,7 +157,8 @@ def main_flow(years:list, months: list,bucket_name:str):
 
 
 if __name__=='__main__':
-    months=list(range(1,13))
-    years=[2022]
+    months=list(range(4,5))
+    years=[2021]
     bucket_name='tfl-cycle-trips'
+    table_name='tfldocker'
     main_flow(years,months,bucket_name)

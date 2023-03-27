@@ -3,6 +3,7 @@ bs4
 requests
 prefect
 prefect_gcp
+prefect_gcp[bigquery]
 google-cloud-storage
 pathlib
 fastparquet

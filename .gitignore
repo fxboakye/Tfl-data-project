@@ -2,3 +2,4 @@ secrets*
 .env
 logs*
 .venv
+flows/__pycache__
