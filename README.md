@@ -33,7 +33,6 @@ Following the successful transformation and verification of the data, it was the
 ### Setting up Prefect and Running flow codes
 There are 2 directories in this repository. The flows directory contains the python scripts and bash scripts required to run the ingestion.
 
-
 ### Setting up Prefect Orion server
 
 To run the prefect server, open a terminal, in the parent directory run:
