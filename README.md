@@ -10,7 +10,7 @@
 * Docker
 
 <p align="center">
-  <img src="images/flow_diagram.png" width="600" title="hover text">
+  <img src="images/flow_diagram.png" width="800" title="hover text">
 </p>
 
 This project is a robust solution that automates the extraction of bicycle trip record datasets from the [Transport for London Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page), leveraging the power of docker. By simply providing month and year values, the pipeline retrieves the necessary data and processes it into a convenient parquet file format. Due to the non-uniformity of each dataset link, the pipeline utilizes regex to parse through the website's links and extracts the required datasets for each specified month and year.
