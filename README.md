@@ -69,7 +69,9 @@ To execute the ingestion script, open a terminal and run:
 docker-compose run cli
 ```
 This will install all the required modules and execute the `gcs_ingestion.py` script in the flows directory. The gcs script calls the biquery-flow.py script
-which writes data from the data lake to bigquery. Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
+which writes data from the data lake to bigquery. 
+
+Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
 
 <p align="center">
   <img src="images/workflow.png" width="600" title="hover text">
@@ -110,3 +112,5 @@ To execute the dbt transformation models on the dataset,  you would need to run:
 ```
 docker compose run --workdir="//usr/app/dbt/tfl_data_dbt" dbt run
 ```
+
+The transformed views and tables would now be available in your BigQuery dataset. 
