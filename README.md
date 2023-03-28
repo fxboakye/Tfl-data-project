@@ -9,6 +9,10 @@
 * Bigquery
 * Docker
 
+<p align="center">
+  <img src="images/flow_diagram.png" width="600" title="hover text">
+</p>
+
 This project is a robust solution that automates the extraction of bicycle trip record datasets from the [Transport for London Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page), leveraging the power of docker. By simply providing month and year values, the pipeline retrieves the necessary data and processes it into a convenient parquet file format. Due to the non-uniformity of each dataset link, the pipeline utilizes regex to parse through the website's links and extracts the required datasets for each specified month and year.
 
 The ingestion script has been thoughtfully designed to address a common problem encountered in data management - avoiding duplicates. To prevent this, the script has been programmed to ingest data to Google Cloud Storage (GCS) ***only*** if the data is not already present in the data lake. This guarantees that there are no redundant or duplicate entries in the data lake.
@@ -69,7 +73,9 @@ To execute the ingestion script, open a terminal and run:
 docker-compose run cli
 ```
 This will install all the required modules and execute the `gcs_ingestion.py` script in the flows directory. The gcs script calls the biquery-flow.py script
-which writes data from the data lake to bigquery. Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
+which writes data from the data lake to bigquery. 
+
+Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
 
 <p align="center">
   <img src="images/workflow.png" width="600" title="hover text">
@@ -110,3 +116,5 @@ To execute the dbt transformation models on the dataset,  you would need to run:
 ```
 docker compose run --workdir="//usr/app/dbt/tfl_data_dbt" dbt run
 ```
+
+The transformed views and tables would now be available in your BigQuery dataset. 
