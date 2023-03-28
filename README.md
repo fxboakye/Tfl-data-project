@@ -41,9 +41,25 @@ To run the prefect server, open a terminal, in the parent directory run:
 docker-compose --profile orion up
 ```
 
-This will start the prefect orion server.
+This will start the prefect orion server which should look like:
 
-Then on your computer navigate to `http://localhost:4200/` to view the workflow ui.
+```cmd
+orion  |  ___ ___ ___ ___ ___ ___ _____    ___  ___ ___ ___  _  _
+orion  | | _ \ _ \ __| __| __/ __|_   _|  / _ \| _ \_ _/ _ \| \| |
+orion  | |  _/   / _|| _|| _| (__  | |   | (_) |   /| | (_) | .` |
+orion  | |_| |_|_\___|_| |___\___| |_|    \___/|_|_\___\___/|_|\_|
+orion  |
+orion  | Configure Prefect to communicate with the server with:
+orion  |
+orion  |     prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
+orion  |
+orion  | View the API reference documentation at http://0.0.0.0:4200/docs
+orion  |
+orion  | Check out the dashboard at http://0.0.0.0:4200
+
+```
+
+Then on your computer navigate to `http://localhost:4200/` to view the workflow ui. At this point there will be no flow runs since no scripts have been executed.
 
 ### Executing the ingestion script
 
@@ -52,7 +68,12 @@ To execute the ingestion script, open a terminal and run:
 ```
 docker-compose run cli
 ```
-This will install all the required modules and execute the `gcs_ingestion.py` script in the flows directory.
+This will install all the required modules and execute the `gcs_ingestion.py` script in the flows directory. The gcs script calls the biquery-flow.py script
+which writes data from the data lake to bigquery. Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
+
+<p align="center">
+  <img src="images/workflow.png" width="600" title="hover text">
+</p>
 
 ### Running dbt models
 - Create `profiles.yml` file in `~/.dbt/` in your local machine or add the following code in your existing `profiles.yml` - 
