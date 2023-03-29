@@ -3,6 +3,7 @@
 [Dashboard](https://public.tableau.com/views/dbtnewb/Dashboard2?:language=en-US&:display_count=n&:origin=viz_share_link)&ensp; &ensp;&ensp;&ensp;&ensp;	[Ingestion_Script](https://github.com/fxboakye/tfl-data-project/blob/master/flows/gcs_ingestion.py)&ensp; &ensp;&ensp;&ensp;&ensp; [dbt Models](https://github.com/fxboakye/tfl-data-project/tree/master/tfl_data_dbt/models)
 
 ### TECH STACK USED
+* Google Cloud
 * Python
 * Prefect
 * dbt
