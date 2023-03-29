@@ -19,7 +19,7 @@ The ingestion script has been thoughtfully designed to address a common problem 
 
 After the data has been successfully saved into the GCS bucket and inserted into the corresponding table in the BigQuery database, additional measures were taken to ensure the integrity of the dataset. This was achieved by leveraging the powerful data transformation capabilities of dbt.
 
-With dbt, essential data operations, including data modeling, testing, and documentation, were incorporated into the data management pipeline. This facilitated the process of ensuring that the data is consistent and accurate, and is suitable for downstream analysis.
+By utilizing dbt, crucial data tasks such as data modeling, testing, and documentation were integrated into the data management workflow. This streamlined the process of verifying the data's consistency, accuracy, and suitability for subsequent analysis. Additionally, the models were designed to incorporate bigquery partitioning and clustering, enabling the data to be structured in a manner that optimized query performance and reduced data processing time. 
 
 Following the successful transformation and verification of the data, it was then saved into a designated warehouse for easy storage and retrieval. At this stage, the data warehouse was then used to create a dynamic dashboard that provides a comprehensive overview of key trends and patterns. Through the dashboard, users can quickly identify important insights such as peak months and peak hours of bike demands, which can be useful for making informed decisions related to bike-sharing services or urban transportation planning. 
 
@@ -31,8 +31,6 @@ Following the successful transformation and verification of the data, it was the
 ## Steps to Reproduce
 
 * Clone Repository
-
-## Getting Started
 
 ### Setting up Prefect and Running flow codes
 There are 2 directories in this repository. The flows directory contains the python scripts and bash scripts required to run the ingestion.
@@ -72,8 +70,7 @@ To execute the ingestion script, open a terminal and run:
 ```
 docker-compose run cli
 ```
-This will install all the required modules and execute the `gcs_ingestion.py` script in the flows directory. The gcs script calls the biquery-flow.py script
-which writes data from the data lake to bigquery. 
+This  will install the necessary packages and run the `gcs_ingestion.py` script located in the flows directory. This script's purpose is to extract data and load it into the GCS datalake. After the data has been successfully ingested, the script invokes the `biquery_flow` function from the biqguery_ingestion script, which transfers the data from the datalake to bigquery.
 
 Navigate to `http://localhost:4200/` to view the workflow UI. At this point, you should see the flow runs. An example is shown below:
 
