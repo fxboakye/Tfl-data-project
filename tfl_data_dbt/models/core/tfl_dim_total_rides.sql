@@ -1,4 +1,4 @@
-{{ config(materialized = "table", partition_by="pickup_datetime", cluster_by="station_name") }} 
+{{ config(materialized = "table") }} 
 
 WITH cleaned_tfldata AS (
     SELECT

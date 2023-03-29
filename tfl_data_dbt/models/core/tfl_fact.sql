@@ -1,4 +1,10 @@
-{{ config(materialized = 'table', partition_by="pickup_datetime", cluster_by=["pustation_id","dostation_id"]) }} 
+{{ config(materialized = 'table', 
+partition_by= {
+    'field': 'pickup_datetime', 
+    'data_type': 'timestamp',
+    'granularity': 'day'
+    },
+      cluster_by=["pustation_id","dostation_id"]) }} 
 
 WITH tfldata AS (
     SELECT
